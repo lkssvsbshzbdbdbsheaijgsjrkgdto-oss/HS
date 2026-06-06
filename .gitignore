@@ -1,34 +1,325 @@
-# Gradle files
-.gradle/
-build/
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>PROXY ANDROID 1.0 | RYAN CRAKED</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-# Local configuration file (sdk path, etc)
-local.properties
+        body {
+            background: radial-gradient(circle at 25% 15%, #0a0a1a, #020006);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', -apple-system, 'Segoe UI', system-ui, BlinkMacSystemFont, sans-serif;
+            padding: 1.5rem;
+        }
 
-# Log/OS Files
-*.log
+        /* panel principal estilo iOS oscuro + púrpura */
+        .proxy-panel {
+            max-width: 850px;
+            width: 100%;
+            background: rgba(14, 12, 26, 0.82);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 2rem;
+            border: 0.5px solid rgba(156, 96, 255, 0.5);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.6), 0 0 0 0.5px rgba(180, 130, 255, 0.2) inset;
+            padding: 2rem 1.8rem;
+        }
 
-# Android Studio generated files and folders
-captures/
-.externalNativeBuild/
-.cxx/
-*.aab
-*.apk
-output-metadata.json
+        /* encabezado con estado online */
+        .header-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
-# IntelliJ
-*.iml
-.idea/
-misc.xml
-deploymentTargetDropDown.xml
-render.experimental.xml
+        .title-box h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #cdb4ff, #9a4dff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
 
-# Keystore files
-*.jks
-*.keystore
+        .title-box p {
+            font-size: 0.7rem;
+            color: #b48eff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
 
-# Google Services (e.g. APIs or Firebase)
-google-services.json
+        /* indicador online con brillo verde pulsante */
+        .online-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #0c0f1c80;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            border: 0.5px solid #3a2a60;
+        }
 
-# Android Profiling
-*.hprof
+        .pulse-led {
+            width: 12px;
+            height: 12px;
+            background-color: #22ff88;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #22ff88;
+            animation: pulseGreen 1.2s infinite ease-out;
+        }
+
+        @keyframes pulseGreen {
+            0% { opacity: 0.6; box-shadow: 0 0 0 0 #22ff8840; }
+            70% { opacity: 1; box-shadow: 0 0 0 6px #22ff8820; }
+            100% { opacity: 0.8; box-shadow: 0 0 0 0 #22ff8800; }
+        }
+
+        .online-text {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #b0ffcc;
+            letter-spacing: 0.5px;
+        }
+
+        /* sección funciones */
+        .section-title {
+            color: #d7b9ff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-left: 3px solid #a855f7;
+            padding-left: 12px;
+            margin: 0 0 1.2rem 0;
+            letter-spacing: 1px;
+        }
+
+        /* lista de opciones con switch individual */
+        .func-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .func-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(25, 20, 45, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid #3b2b60;
+            border-radius: 1.2rem;
+            padding: 0.7rem 1.2rem;
+            transition: all 0.15s;
+        }
+
+        .func-label {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #e0d4ff;
+            letter-spacing: -0.2px;
+        }
+
+        /* toggle switch estilo iOS */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #2d1f4a;
+            transition: 0.2s;
+            border-radius: 34px;
+            border: 0.5px solid #7950db;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 2.5px;
+            background-color: #bbaaff;
+            transition: 0.2s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #7c3aed;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(21px);
+            background-color: #ffffff;
+        }
+
+        /* footer con copyright */
+        .proxy-footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #2e2350;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+            color: #7c6a9e;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .copyright {
+            font-family: monospace;
+            letter-spacing: 0.5px;
+            color: #a68bff;
+        }
+
+        @media (max-width: 550px) {
+            .proxy-panel { padding: 1.3rem; }
+            .func-item { padding: 0.6rem 1rem; }
+            .func-label { font-size: 0.85rem; }
+            .header-status { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+<div class="proxy-panel">
+    <div class="header-status">
+        <div class="title-box">
+            <h1>PROXY ANDROID 1.0</h1>
+            <p>FUNCOES</p>
+        </div>
+        <div class="online-status">
+            <div class="pulse-led"></div>
+            <span class="online-text">ONLINE</span>
+        </div>
+    </div>
+
+    <div class="section-title">SISTEMA WIFI</div>
+    <div class="func-list" id="funcList">
+        <!-- cada función tendrá su propio switch -->
+        <div class="func-item" data-func="HS Alto">
+            <span class="func-label">HS  BRUTAL</span>
+            <label class="switch">
+                <input type="checkbox" class="func-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="func-item" data-func="HS Acima de Cabeca">
+            <span class="func-label">HS PESCOÇO</span>
+            <label class="switch">
+                <input type="checkbox" class="func-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="func-item" data-func="HS Alto + Neck">
+            <span class="func-label">HS orelha + Neck</span>
+            <label class="switch">
+                <input type="checkbox" class="func-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="func-item" data-func="HS Alto com Precoce">
+            <span class="func-label">HS Alto com Precoce</span>
+            <label class="switch">
+                <input type="checkbox" class="func-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="func-item" data-func="HS Caveira">
+            <span class="func-label">HS Caveira</span>
+            <label class="switch">
+                <input type="checkbox" class="func-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="func-item" data-func="HS Abaixo do Precoce">
+            <span class="func-label">HS Abaixo do Precoce</span>
+            <label class="switch">
+                <input type="checkbox" class="func-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="func-item" data-func="HS Neck">
+            <span class="func-label">HS Neck</span>
+            <label class="switch">
+                <input type="checkbox" class="func-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="func-item" data-func="HS Precoce Legal">
+            <span class="func-label">HS Precoce Legal</span>
+            <label class="switch">
+                <input type="checkbox" class="func-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="proxy-footer">
+        <span>PROXY CRAKED RYAN MODS v1.0</span>
+        <span class="copyright">© Algenis Mods</span>
+    </div>
+</div>
+
+<script>
+    // Obtener todos los toggles
+    const toggles = document.querySelectorAll('.func-toggle');
+    toggles.forEach(toggle => {
+        toggle.addEventListener('change', (e) => {
+            const parentItem = e.target.closest('.func-item');
+            const funcName = parentItem.getAttribute('data-func');
+            const isEnabled = e.target.checked;
+            // Efecto visual de cambio en el item
+            if (isEnabled) {
+                parentItem.style.borderColor = '#a855f7';
+                parentItem.style.background = 'rgba(80, 60, 140, 0.5)';
+                console.log(`[PROXY ANDROID 1.0] FUNCION ACTIVADA: ${funcName}`);
+            } else {
+                parentItem.style.borderColor = '#3b2b60';
+                parentItem.style.background = 'rgba(25, 20, 45, 0.6)';
+                console.log(`[PROXY ANDROID 1.0] FUNCION DESACTIVADA: ${funcName}`);
+            }
+        });
+    });
+
+    // Estado inicial: todos los switches apagados (por defecto sin check)
+    // Pero visualmente limpio. Opcional: dejar algunos? No, según imagen original.
+    // Aseguramos que el borde inicial sea neutro
+    document.querySelectorAll('.func-item').forEach(item => {
+        const chk = item.querySelector('.func-toggle');
+        if (!chk.checked) {
+            item.style.borderColor = '#3b2b60';
+            item.style.background = 'rgba(25, 20, 45, 0.6)';
+        }
+    });
+</script>
+</body>
+</html>
