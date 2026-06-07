@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HS PROXY CRAKED MK.MODS</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#000;
+    color:#fff;
+    padding:12px;
+}
+
+.topo{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+    gap:10px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.menu{
+    width:48px;
+    height:48px;
+    background:#14061f;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#b84cff;
+    font-size:22px;
+    cursor:pointer;
+}
+
+.titulo{
+    font-size:18px;
+    font-weight:bold;
+    color:#fff;
+}
+
+.titulo span{
+    color:#b84cff;
+}
+
+.status{
+    color:#ff4444;
+    font-size:12px;
+    text-align:right;
+    font-weight:bold;
+}
+
+.card{
+    background:#080808;
+    border-radius:24px;
+    padding:18px;
+    min-height:78vh;
+    border:1px solid #151515;
+}
+
+.func-title{
+    border-left:4px solid #b84cff;
+    padding-left:10px;
+    color:#999;
+    margin-bottom:18px;
+    font-size:13px;
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid #141414;
+}
+
+.item:last-child{
+    border-bottom:none;
+}
+
+.nome{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.desc{
+    color:#666;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.switch{
+    width:58px;
+    height:32px;
+    background:#222;
+    border-radius:30px;
+    position:relative;
+    opacity:.5;
+    cursor:not-allowed;
+    transition:.3s;
+}
+
+.switch::before{
+    content:'';
+    width:26px;
+    height:26px;
+    background:#777;
+    border-radius:50%;
+    position:absolute;
+    top:3px;
+    left:3px;
+    transition:.3s;
+}
+
+.switch.active{
+    background:#8a2cff;
+}
+
+.switch.active::before{
+    left:29px;
+    background:#fff;
+}
+
+.popup{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.8);
+    justify-content:center;
+    align-items:center;
+}
+
+.box{
+    width:90%;
+    max-width:350px;
+    background:#111;
+    padding:20px;
+    border-radius:18px;
+    border:1px solid #8a2cff;
+}
+
+.box h3{
+    margin-bottom:10px;
+}
+
+.box p{
+    color:#aaa;
+    font-size:13px;
+    margin-bottom:12px;
+}
+
+.box input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#1b1b1b;
+    color:#fff;
+}
+
+.box button{
+    width:100%;
+    margin-top:12px;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#8a2cff;
+    color:white;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topo">
+
+    <div class="logo">
+        <div class="menu" id="menuBtn">☰</div>
+
+        <div class="titulo">
+            HS PROXY <span>CRAKED MK.MODS</span>
+        </div>
+    </div>
+
+    <div class="status" id="status">
+        🔴 OFFLINE
+    </div>
+
+</div>
+
+<div class="card">
+
+    <div class="func-title">FUNÇÕES</div>
+
+    <div class="item">
+        <div>
+            <div class="nome">HS Neck</div>
+            <div class="desc">Disponível após conexão</div>
+        </div>
+        <div class="switch"></div>
+    </div>
+
+    <div class="item">
+        <div>
+            <div class="nome">HS PESCOÇO</div>
+            <div class="desc">Disponível após conexão</div>
+        </div>
+        <div class="switch"></div>
+    </div>
+
+    <div class="item">
+        <div>
+            <div class="nome">HS Alto + Neck</div>
+            <div class="desc">Disponível após conexão</div>
+        </div>
+        <div class="switch"></div>
+    </div>
+
+    <div class="item">
+        <div>
+            <div class="nome">HS caveira</div>
+            <div class="desc">Disponível após conexão</div>
+        </div>
+        <div class="switch"></div>
+    </div>
+
+</div>
+
+<div class="popup" id="popup">
+    <div class="box">
+        <h3>Conectar DNS</h3>
+
+        <p>
+            HS PROXY deseja conectar à sua rede.
+            Insira uma DNS válida.
+        </p>
+
+        <input type="text" id="dns" placeholder="dns.adguard.com">
+
+        <button onclick="conectar()">
+            CONECTAR
+        </button>
+    </div>
+</div>
+
+<script>
+
+document.getElementById("menuBtn").onclick = function(){
+    document.getElementById("popup").style.display="flex";
+};
+
+function conectar(){
+
+    let dns =
+    document.getElementById("dns").value.trim().toLowerCase();
+
+    let validas = [
+        "dns.adguard.com",
+        "dns.google",
+        "one.one.one.one"
+    ];
+
+    if(validas.includes(dns)){
+
+        document.getElementById("status").innerHTML =
+        "🟢 ONLINE";
+
+        document.getElementById("status").style.color =
+        "#00ff66";
+
+        document.getElementById("popup").style.display =
+        "none";
+
+        document.querySelectorAll(".switch")
+        .forEach(function(sw){
+
+            sw.style.opacity="1";
+            sw.style.cursor="pointer";
+
+            sw.onclick=function(){
+                this.classList.toggle("active");
+            };
+
+        });
+
+    }else{
+
+        alert("DNS inválida!");
+
+    }
+
+}
+</script>
+
+</body>
+</html>
